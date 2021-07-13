@@ -91,6 +91,27 @@ const Game = () => {
     })
   }
 
+  const jumpTo = (step: number) => {
+    setState(state => {
+      return {
+        history: state.history,
+        stepNumber: step,
+      }
+    })
+  }
+
+  const moves = state.history.map((step, move) => {
+    const desc = move ?
+      `Go to move # ${move}` :
+      'Go to game start'
+
+    return (
+      <li key={move}>
+        <button onClick={() => jumpTo(move)}>{desc}</button>
+      </li>
+    )
+  })
+
   const winner = calculateWinner(current.squares)
   const status = winner ? 'Winner: ' + winner : 'Next player: ' + (current.xIsNext ? 'X' : 'O')
 
@@ -101,7 +122,7 @@ const Game = () => {
       </div>
       <div className="game-info">
         <div>{status}</div>
-        <ol>{/* TODO */}</ol>
+        <ol>{moves}</ol>
       </div>
     </div>
   )
