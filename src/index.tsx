@@ -62,7 +62,11 @@ const Game = () => {
   const [state, setState] = useState<GameState>({
     history: [
       {
-        squares: [null, null, null, null, null, null, null, null, null],
+        squares: [
+          null, null, null,
+          null, null, null,
+          null, null, null,
+        ],
         xIsNext: true,
       },
     ],
@@ -113,8 +117,7 @@ const Game = () => {
     )
   })
 
-  const winner = calculateWinner(current.squares)
-  const status = winner ? 'Winner: ' + winner : 'Next player: ' + (current.xIsNext ? 'X' : 'O')
+  const status = calculateStatus(current)
 
   return (
     <div className="game">
@@ -127,6 +130,19 @@ const Game = () => {
       </div>
     </div>
   )
+}
+
+const calculateStatus = (step: Step): string => {
+  const winner = calculateWinner(step.squares)
+  const finished = step.squares.filter((squareState: SquareState) => squareState != null).length === step.squares.length
+
+  if (winner != null) {
+    return `Winner: ${winner}`
+  } else if (finished) {
+    return 'Draw'
+  } else {
+    return `Next player: ${step.xIsNext ? 'X' : 'O'}`
+  }
 }
 
 const calculateWinner = (squares: BoardState): SquareState => {
