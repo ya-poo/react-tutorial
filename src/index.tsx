@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import { Repeat } from "typescript-tuple";
+
+import { useState } from 'react';
+import ReactDOM from 'react-dom';
+import { Repeat } from 'typescript-tuple';
 
 type SquareState = 'O' | 'X' | null
 
@@ -101,13 +102,13 @@ const Game = () => {
   }
 
   const moves = state.history.map((step, move) => {
-    const desc = move ?
+    const description = move ?
       `Go to move # ${move}` :
       'Go to game start'
 
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{desc}</button>
+        <button onClick={() => jumpTo(move)}>{description}</button>
       </li>
     )
   })
